@@ -1,39 +1,19 @@
+# docker-compose.yml
 services:
   ghost:
     image: ghost:6-alpine
     ports:
       - "2368:2368"
+    build:
+      context: . # <-- Baut das Image aus deinem Dockerfile (siehe oben)
     environment:
-      url: http://localhost:2368
-      database__client: mysql
-      database__connection__host: db
-      database__connection__user: ghost
-      database__connection__password: ghostpass
-      database__connection__database: ghostdb
-      database__connection__port: 3306
-    volumes:
-      - ./content:/var/lib/ghost/content
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: unless-stopped
-    entrypoint: [ "docker-entrypoint.sh" ]
-    command: ["/usr/local/bin/node", "current/index.js"]
+      # Lädt alle DB-Details aus der .env-Datei (DB_HOST=db)
+      url: ${GHOST_URL}
+      database__client: ${DB_CLIENT}
+      database__connection__host: ${DB_HOST}
+      # ... (Restliche DB-Variablen)
+    # ... (Rest des Ghost-Services)
 
   db:
     image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: ghostdb
-      MYSQL_USER: ghost
-      MYSQL_PASSWORD: ghostpass
-    volumes:
-      - mysqldata:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  mysqldata:
+    # ... (Rest des MySQL-Services)

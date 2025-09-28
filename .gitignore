@@ -1,0 +1,6 @@
+content/data/*.db
+node_modules/
+.env
+
+content/logs/
+content/data/ghost-local.db
