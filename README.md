@@ -19,27 +19,41 @@ So entstand Ghost: schnell, offen, elegant.
 
 ## Systemübersicht
 
-```plaintext
-+-------------+       +------------------+       +------------------+
-|  Nutzer:in  | <---> |   Browser (UI)   | <---> |   Ghost Frontend |
-+-------------+       +------------------+       +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Ghost Backend    |
-                                     | (Admin-Panel)    |
-                                     +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Datenbank (SQLite|
-                                     | oder PostgreSQL) |
-                                     +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Server / Docker  |
-                                     +------------------+
+```
++----------------+ +------------------+ +------------------------------+
+| Nutzer:in      | <---> | Browser (UI)     | <---> | Ghost Frontend   |
++----------------+ +------------------+ +------------------------------+
+                               |
+                               v
+                         +------------------+
+                         | Ghost Backend    |
+                         | (Admin-Panel)    |
+                         +------------------+
+                               |
+                               v
+                  +----------------------------+
+                  | Webserver (Ghost)          |
+                  | Stellt Webseite bereit     |
+                  | (Läuft im Docker Container)|
+                  +----------------------------+
+                               |
+                  +------------+-------------+
+                  | Kommuniziert über Ports  |
+                  | und Umgebungsvariablen   |
+                  +------------+-------------+
+                  |       |          |
+                  v       v          v
++------------------+ +--------------------+ +------------------------+
+| Datenbank (MySQL)| | Mailserver         | | DNS & Domain           |
+| Speichert Inhalt | | (Mailgun)          | | Macht Seite            |
+| oder (SQLite/PGSQL)| | Versendet E-Mails| | öffentlich erreichbar  |
++------------------+ +--------------------+ +------------------------+
+                               |
+                               v
+                       +--------------------+
+                       | Server / Docker    |
+                       | Führt Ghost CMS aus|
+                       +--------------------+
 
 ```
 
