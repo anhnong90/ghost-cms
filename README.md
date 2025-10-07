@@ -20,9 +20,9 @@ So entstand Ghost: schnell, offen, elegant.
 ## Systemübersicht
 
 ```
-+----------------+ +------------------+ +------------------------------+
++----------------+       +------------------+       +------------------+
 | Nutzer:in      | <---> | Browser (UI)     | <---> | Ghost Frontend   |
-+----------------+ +------------------+ +------------------------------+
++----------------+       +------------------+       +------------------+
                                |
                                v
                          +------------------+
@@ -31,23 +31,23 @@ So entstand Ghost: schnell, offen, elegant.
                          +------------------+
                                |
                                v
-                  +----------------------------+
-                  | Webserver (Ghost)          |
-                  | Stellt Webseite bereit     |
-                  | (Läuft im Docker Container)|
-                  +----------------------------+
+                  +---------------------------+
+                  | Webserver (Ghost)         |
+                  | Stellt Webseite bereit    |
+                  |(Läuft im Docker Container)|
+                  +---------------------------+
                                |
                   +------------+-------------+
                   | Kommuniziert über Ports  |
                   | und Umgebungsvariablen   |
                   +------------+-------------+
-                  |       |          |
-                  v       v          v
-+------------------+ +--------------------+ +------------------------+
-| Datenbank (MySQL)| | Mailserver         | | DNS & Domain           |
-| Speichert Inhalt | | (Mailgun)          | | Macht Seite            |
-| oder (SQLite/PGSQL)| | Versendet E-Mails| | öffentlich erreichbar  |
-+------------------+ +--------------------+ +------------------------+
+                  |             |            |
+                  v             v            v
++-------------------+  +------------------+  +---------------------+
+| Datenbank (MySQL) |  | Mailserver       |  | DNS & Domain        |
+| Speichert Inhalt  |  | (Mailgun)        |  | Macht Seite         |
+|oder (SQLite/PGSQL)|  | Versendet E-Mails|  |öffentlich erreichbar|
++-------------------+  +------------------+  +---------------------+
                                |
                                v
                        +--------------------+
@@ -330,26 +330,40 @@ Thus, Ghost was born: fast, open, and elegant.
 ## System Overview
 
 ```plaintext
-+-------------+       +------------------+       +------------------+
-|   User      | <---> |   Browser (UI)   | <---> |   Ghost Frontend |
-+-------------+       +------------------+       +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Ghost Backend    |
-                                     | (Admin Panel)    |
-                                     +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Database (SQLite |
-                                     | or PostgreSQL)   |
-                                     +------------------+
-                                               |
-                                               v
-                                     +------------------+
-                                     | Server / Docker  |
-                                     +------------------+
++--------------+       +-------------------+       +------------------+
+| User         | <---> | Browser (UI)      | <---> | Ghost Frontend   |
++--------------+       +-------------------+       +------------------+
+                               |
+                               v
+                         +------------------+
+                         | Ghost Backend    |
+                         | (Admin-Panel)    |
+                         +------------------+
+                               |
+                               v
+                  +---------------------------+
+                  | Webserver (Ghost)         |
+                  | Serves the Website        |
+                  | (Runs in Docker Container)|
+                  +---------------------------+
+                               |
+                  +------------+-------------+
+                  | Communicates via Ports   |
+                  | and Environment Variables|
+                  +------------+-------------+
+                  |             |          |
+                  v             v          v
++------------------+ +------------------+ +--------------------+
+| Database (MySQL) | | Mail Server      | | DNS & Domain       |
+| Stores Content   | | (Mailgun)        | | Makes Site         |
+| or (SQLite/PGSQL)| | Sends Emails     | | Publicly Accessible|
++------------------+ +------------------+ +--------------------+
+                               |
+                               v
+                       +--------------------+
+                       | Server / Docker    |
+                       | Executes Ghost CMS |
+                       +--------------------+
 
 ```
 ---
